@@ -1,5 +1,6 @@
 ﻿NET library for the ScanR REST API 
 =============
+[![Build status](https://ci.appveyor.com/api/projects/status/thx1if2dk5pa4y6k?svg=true)](https://ci.appveyor.com/project/Kevin-Bronsdijk/scanr-net)
 
 This library interacts with the ScanR REST API allowing you to utilize ScanR's features using a .NET interface. 
 
