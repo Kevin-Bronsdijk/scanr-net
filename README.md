@@ -13,11 +13,11 @@ This library interacts with the ScanR REST API allowing you to utilize ScanR's f
 
 ## Getting Started
 
-First you need to sign up for the [ScanR API](https://scanr.xyz/) and obtain your unique **API Token**. Once you have set up your account, you can start using ScanR.
+First you need to sign up for the [ScanR](https://scanr.xyz/) and obtain your unique **API Token**. Once you have set up your account, you can start using ScanR.
 
 ## How to use
 
-You can convert/can your documents by providing the URL of the document you want to convert or upload the image directly instead. Just keep in mind that the image URL must be accessible for ScanR. 
+You can convert/can your documents by providing the URL of the document you want to  to text or upload the document directly instead. Just keep in mind that the document URL must be accessible for ScanR. 
 
 ## Authentication
 
@@ -63,7 +63,6 @@ if (response.Success)
 
 ## Public url
 If the resource is already available on the web, it's not necessary to upload the document. Just add the public URL as included within this sample. 
-
 
 **Public Url Images** 
 
