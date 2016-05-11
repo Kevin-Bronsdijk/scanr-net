@@ -205,8 +205,6 @@ namespace Tests
             }
         }
 
-        
-
         [TestMethod]
         public void Client_RequestUriNoExtensionError_IsTrue()
         {
@@ -250,7 +248,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void Client_RequestFileNotFound_IsTrue()
+        public void Client_RequestFileNotSupported_IsTrue()
         {
             var connection = ScanRConnection.Create("key");
             var client = new ScanRClient(connection);
@@ -258,7 +256,7 @@ namespace Tests
             try
             {
                 client.Scan(
-                    "C:\\test.png",
+                    "image1.txt",
                     Language.SimplifiedChinese
                     );
 
@@ -270,5 +268,240 @@ namespace Tests
             }
         }
 
+        [TestMethod]
+        public void Client_RequestFileNoExtensionError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.Scan(
+                    "image1",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_RequestFileNotFoundError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.Scan(
+                    "test.jpg",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+
+        [TestMethod]
+        public void Client_PdfRequestUploadNoFileNameError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    new byte[] { 1 },
+                    string.Empty,
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUploadNoFileError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    null,
+                    "test.pdf",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUploadFileNotSupportedError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    new byte[] { 1 },
+                    "test.dll",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUploadFileNoExtensionError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    new byte[] { 1 },
+                    "test",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUriNoExtensionError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    new Uri("http://www.devslice.net/test"),
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUriFileNotSupportedError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    new Uri("http://www.devslice.net/test.pdp"),
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestFileNotSupported_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    "image1.txt",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestFileNoExtensionError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    "image1",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestFileNotFoundError_IsTrue()
+        {
+            var connection = ScanRConnection.Create("key");
+            var client = new ScanRClient(connection);
+
+            try
+            {
+                client.ScanPdf(
+                    "test.pdf",
+                    Language.SimplifiedChinese
+                    );
+
+                Assert.IsTrue(false, "No exception");
+            }
+            catch (Exception)
+            {
+                Assert.IsTrue(true);
+            }
+        }
     }
 }

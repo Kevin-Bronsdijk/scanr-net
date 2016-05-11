@@ -84,8 +84,7 @@ namespace ScanR.Http
                     var responseMessage =
                         await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false))
                 {
-                    //var test = await responseMessage.Content.ReadAsStringAsync();
-
+                    var test = await responseMessage.Content.ReadAsStringAsync();
 
                     return await BuildResponse<TResponse>(responseMessage, cancellationToken).ConfigureAwait(false);
                 }
@@ -101,14 +100,8 @@ namespace ScanR.Http
                 var content =
                     new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(CultureInfo.InvariantCulture)))
             {
-                //var body = new ObjectContent(scanRApiRequest.Body.GetType(),
-                //    scanRApiRequest.Body, _formatter, new MediaTypeHeaderValue("application/json"));
-                //content.Add(body);
+                content.Add(new StreamContent(new MemoryStream(image)), "file", filename);
 
-                //content.Add(new StringContent(filename), "file");
-
-                content.Add(new StreamContent(new MemoryStream(image)), filename, filename);
-                
                 using (
                     var responseMessage =
                         await _client.PostAsync(_apiUrl + scanRApiRequest.Uri + BuildUrl(scanRApiRequest), content, cancellationToken))
@@ -133,20 +126,34 @@ namespace ScanR.Http
             {
                 if (message.IsSuccessStatusCode)
                 {
-                    response.Body =
-                        await
-                            message.Content.ReadAsAsync<TResponse>(new[] {_formatter}, cancellationToken)
-                                .ConfigureAwait(false);
+                    try
+                    {
+                        response.Body =
+                            await
+                                message.Content.ReadAsAsync<TResponse>(new[] { _formatter }, cancellationToken)
+                                    .ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Cannot serialize the content", ex);
+                    }
                 }
                 else
                 {
-                    var errorResponse =
-                        await message.Content.ReadAsAsync<ErrorResult>(cancellationToken).ConfigureAwait(false);
-
-                    if (errorResponse != null)
+                    try
                     {
-                        response.Error = errorResponse.Error;
+                        var errorResponse = await message.Content.ReadAsAsync<ErrorResult>(cancellationToken).ConfigureAwait(false);
+
+                        if (errorResponse != null)
+                        {
+                            response.Error = errorResponse.Error;
+                        }
                     }
+                    catch (Exception)
+                    {
+                        response.Error = "Cannot serialize the content";
+                    }
+  
                 }
             }
 

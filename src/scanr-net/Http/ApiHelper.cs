@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using ScanR.Model;
 
 namespace ScanR.Http
@@ -20,22 +21,47 @@ namespace ScanR.Http
             }
         }
 
-        public static void FileValidation(Uri uri)
+        public static void ImageFileValidation(Uri url)
         {
-            var supportedExtensions = new List<string> {".pdf", ".bmp", ".pnm", ".png", ".jpg", ".jpeg", ".tiff", ".gif", ".ps", ".webp" };
+            ImageFileValidation(Path.GetFileName(url.AbsolutePath));
+        }
 
-            if (Path.HasExtension(uri.AbsoluteUri))
+        public static void ImageFileValidation(string filename)
+        {
+            filename.ThrowIfNullOrEmpty("filename");
+
+            FileValidation(filename);
+        }
+
+        public static void PdfFileValidation(Uri url)
+        {
+            PdfFileValidation(Path.GetFileName(url.AbsolutePath));
+        }
+
+        public static void PdfFileValidation(string filename)
+        {
+            filename.ThrowIfNullOrEmpty("filename");
+
+            FileValidation(filename, false);
+        }
+
+        private static void FileValidation(string filename, bool isImage = true)
+        {
+            var supportedExtensions = isImage ? new List<string> { ".bmp", ".pnm", ".png", ".jpg", ".jpeg", ".tiff", ".gif", ".ps", ".webp" } : 
+                new List<string> { ".pdf" };
+
+            if (Path.HasExtension(filename))
             {
-                var extension = Path.GetExtension(uri.AbsoluteUri).ToLower();
+                var extension = Path.GetExtension(filename);
 
-                if (!supportedExtensions.Any(e => e.Contains(extension)))
+                if (!supportedExtensions.Any(e => extension != null && e.Contains(extension.ToLower())))
                 {
-                    throw new ApplicationException("Url must have an supported extension");
+                    throw new ApplicationException("The file must have an supported extension");
                 }
             }
             else
             {
-                throw new ApplicationException("Url must have an extension");
+                throw new ApplicationException("The file must have an extension");
             }
         }
 

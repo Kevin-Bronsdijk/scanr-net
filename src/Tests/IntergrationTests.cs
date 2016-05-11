@@ -10,6 +10,7 @@ namespace Tests
 {
     [TestClass]
     [DeploymentItem("Images")]
+    [Ignore] // Only test build locally
     public class IntergrationTests
     {
         [TestInitialize]
@@ -66,12 +67,12 @@ namespace Tests
 
             var result = response.Result;
 
-            //Assert.IsTrue(result.Success);
-            //Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
-            //Assert.IsTrue(string.IsNullOrEmpty(result.Error));
-            //Assert.IsTrue(result.Body != null);
-            //Assert.IsTrue(!string.IsNullOrEmpty(result.Body.Text));
-            //Assert.IsTrue(result.Body.Text == "DevSlice.Net");
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
+            Assert.IsTrue(string.IsNullOrEmpty(result.Error));
+            Assert.IsTrue(result.Body != null);
+            Assert.IsTrue(!string.IsNullOrEmpty(result.Body.Text));
+            Assert.IsTrue(result.Body.Text == "DevSliceNet\n\n");
         }
 
         [TestMethod]
@@ -85,12 +86,72 @@ namespace Tests
 
             var result = response.Result;
 
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
+            Assert.IsTrue(string.IsNullOrEmpty(result.Error));
+            Assert.IsTrue(result.Body != null);
+            Assert.IsTrue(!string.IsNullOrEmpty(result.Body.Text));
+            Assert.IsTrue(result.Body.Text == "DevSliceNet\n\n");
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUploadDevSliceNet_IsTrue()
+        {
+            var client = HelperFunctions.CreateWorkingClient();
+            var image = File.ReadAllBytes(TestData.LocalTestPdf);
+
+            var response = client.ScanPdf(
+                image,
+                TestData.LocalTestPdf,
+                Language.English);
+
+            var result = response.Result;
+
+            // PDF support still very limited, sample PDF failed.
+
             //Assert.IsTrue(result.Success);
-           // Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
+            //Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
             //Assert.IsTrue(string.IsNullOrEmpty(result.Error));
             //Assert.IsTrue(result.Body != null);
-           // Assert.IsTrue(!string.IsNullOrEmpty(result.Body.Text));
-            //Assert.IsTrue(result.Body.Text == "DevSlice.Net");
+        }
+
+        [TestMethod]
+        public void Client_PdfRequestUploadDevSliceNetFilePath_IsTrue()
+        {
+            var client = HelperFunctions.CreateWorkingClient();
+
+            var response = client.ScanPdf(
+                TestData.LocalTestPdf,
+                Language.English);
+
+            var result = response.Result;
+
+            // PDF support still very limited, sample PDF failed.
+
+            //Assert.IsTrue(result.Success);
+            //Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
+            //Assert.IsTrue(string.IsNullOrEmpty(result.Error));
+            //Assert.IsTrue(result.Body != null);
+        }
+
+        [TestMethod]
+        public void Client_RequestUriPdfFromTheWeb_IsTrue()
+        {
+            var testData = new Tuple<Uri, string>(new Uri("http://www.cals.uidaho.edu/edComm/curricula/CustRel_curriculum/content/sample.pdf"),
+                "Sample Adobe Reader File\n\nIf you can read this, you have Adobe Reader Installed.\n\n");
+
+            var client = HelperFunctions.CreateWorkingClient();
+
+            var response = client.ScanPdf(testData.Item1, Language.English);
+
+            var result = response.Result;
+
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.StatusCode == HttpStatusCode.OK);
+            Assert.IsTrue(string.IsNullOrEmpty(result.Error));
+            Assert.IsTrue(result.Body != null);
+            Assert.IsTrue(!string.IsNullOrEmpty(result.Body.Text[0]));
+            Assert.IsTrue(result.Body.Text[0] == testData.Item2);
         }
     }
 }

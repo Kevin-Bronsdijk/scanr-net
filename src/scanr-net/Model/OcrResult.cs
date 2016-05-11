@@ -11,4 +11,14 @@ namespace ScanR.Model
         [JsonProperty("text")]
         public string Text { get; set; }
     }
+
+    public class OcrMultiPageResult
+    {
+        internal OcrMultiPageResult()
+        {
+        }
+
+        [JsonProperty("text")]
+        public string[] Text { get; set; }
+    }
 }
