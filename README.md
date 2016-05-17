@@ -1,6 +1,7 @@
 ﻿NET library for the ScanR REST API 
 =============
-[![Build status](https://ci.appveyor.com/api/projects/status/thx1if2dk5pa4y6k?svg=true)](https://ci.appveyor.com/project/Kevin-Bronsdijk/scanr-net)
+[![Build status](https://ci.appveyor.com/api/projects/status/thx1if2dk5pa4y6k?svg=true)](https://ci.appveyor.com/project/Kevin-Bronsdijk/scanr-net) [![NuGet](https://img.shields.io/nuget/v/scanr-net.svg?maxAge=2592000)](https://www.nuget.org/packages/scanr-net/)
+
 
 This library interacts with the ScanR REST API allowing you to utilize ScanR's features using a .NET interface. 
 
@@ -9,8 +10,7 @@ This library interacts with the ScanR REST API allowing you to utilize ScanR's f
 * [Authentication](#authentication)
 * [Direct upload images](#direct-upload-images)
 * [Direct upload Pdfs](#direct-upload-pdfs)
-* [Public url images](#public-url-images)
-* [Public url Pdfs](#public-url-pdfs)
+* [Public Urls](#public-urls)
 
 ## Getting Started
 
@@ -29,6 +29,7 @@ The first step is to authenticate to ScanR API by providing your unique AAPI Tok
 ```
 
 ## Direct upload images
+
 ScanR allows you to easily upload your images as can be seen within the example below:
 
 **File path** (Byte array also supported)
@@ -45,7 +46,8 @@ if (response.Success)
     var text = response.Body.Text
 ```
 
-## Direct upload Pfds
+## Direct upload Pdfs
+
 Pdfs can have multiple results which is based on the amount of pages included within the document. Therefore, the call returns a different result as shown within the examples below:
 
 **File path** (Byte array also supported)
@@ -62,10 +64,10 @@ if (response.Success)
     var text = response.Body.Text // Array of items for each page
 ```
 
-## Public url
+## Public Urls
 If the resource is already available on the web, it's not necessary to upload the document. Just add the public URL as included within this sample. 
 
-**Public Url Images** 
+**Public Url for Images** 
 
 ```C#
 var client = new ScanRClient(connection);
@@ -79,13 +81,13 @@ if (response.Success)
     var text = response.Body.Text
 ```
 
-**Public Url Pdfs** 
+**Public Url for Pdfs** 
 
 ```C#
 var client = new ScanRClient(connection);
 
 var response = await client.ScanPdf(
-		new Uri("http://blah.blah/image.pfs")
+		new Uri("http://blah.blah/image.pdf")
                 Language.English
                 );
 
