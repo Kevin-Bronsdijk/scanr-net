@@ -1,4 +1,4 @@
-ATTN: This client is obsolete and will no longer receive updates given that ScanR is out of business.
+📢 ATTN: This client is obsolete and will no longer receive updates given that ScanR is out of business. 📢 
 
 NET library for the ScanR REST API 
 =============
