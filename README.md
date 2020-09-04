@@ -1,4 +1,6 @@
-﻿NET library for the ScanR REST API 
+ATTN: This client is obsolete and will no longer receive updates given that ScanR is out of business.
+
+NET library for the ScanR REST API 
 =============
 [![Build status](https://ci.appveyor.com/api/projects/status/thx1if2dk5pa4y6k?svg=true)](https://ci.appveyor.com/project/Kevin-Bronsdijk/scanr-net) [![NuGet](https://img.shields.io/nuget/v/scanr-net.svg?maxAge=2592000)](https://www.nuget.org/packages/scanr-net/)
 
